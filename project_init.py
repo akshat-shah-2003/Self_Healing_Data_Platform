@@ -2,8 +2,8 @@ from pathlib import Path
 import os
 
 files_list = [
-    "data/raw/",
-    "data/processed/",
+    "data/raw/readme.txt",
+    "data/processed/readme.txt",
     "logs/",
     "etl/extract.py",
     "etl/transform.py",
