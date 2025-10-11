@@ -24,6 +24,6 @@ query = "SELECT ORDERNUMBER AS ORDER_ID, QUANTITYORDERED AS ORDER_QUANTITY, PRIC
 df = pd.read_sql(query, conn)
 
 df.to_csv("./data/raw/sales_data.csv", index=False)
-print("Raw data extracted and saved successfully ✅.")
+print("Raw data extracted and saved successfully.")
 
 conn.close()
