@@ -19,3 +19,4 @@ pytest-cov
 requests
 beautifulsoup4
 pathlib
+snowflake-connector-python
