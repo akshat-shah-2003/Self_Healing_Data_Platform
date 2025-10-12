@@ -1,10 +1,9 @@
 import pandas as pd
 from utils.logger import get_logger
-from etl.extract import extract_data###
 
 logger = get_logger(__name__)
 
-def transform_data(df, t_path = './data/processed/'):
+def transform_data(df):
     logger.info("Transforming data...")
     def date_mod(x):
         x = str(x)
@@ -21,13 +20,8 @@ def transform_data(df, t_path = './data/processed/'):
         df['order_date'] = df['order_date'].replace(' 0:00','')
         df['order_date'] = df['order_date'].apply(date_mod)
         logger.info("Data transformation complete.")
-        df.to_csv(f"{t_path}/transformed_sales__data.csv", index=False)
-        logger.info(f"Transformed data saved to {t_path}/transformed_sales__data.csv")
         return df
     
     except Exception as e:
         logger.error(f"Data transformation failed: {e}")
         raise
-
-if __name__ == "__main__":###
-    transform_data(extract_data())###
