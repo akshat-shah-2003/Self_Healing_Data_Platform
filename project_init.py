@@ -4,7 +4,7 @@ import os
 files_list = [
     "data/raw/readme.txt",
     "data/processed/readme.txt",
-    "logs/",
+    "logs/readme.txt",
     "etl/extract.py",
     "etl/transform.py",
     "etl/load.py",
