@@ -1,6 +1,6 @@
 {
     "user_id": "AKSHATSHAH",
-    "timestamp": "2025-11-04T22:52:24Z",
+    "timestamp": "2025-11-05T20:32:09Z",
     "database": "SALES_DB",
     "schemas": {
         "PUBLIC": {
@@ -189,13 +189,13 @@
                         "default": null
                     },
                     {
-                        "column_name": "LOCATION",
+                        "column_name": "CUSTOMER_ID",
                         "data_type": "TEXT",
                         "is_nullable": "YES",
                         "default": null
                     },
                     {
-                        "column_name": "CUSTOMER_ID",
+                        "column_name": "LOCATION",
                         "data_type": "TEXT",
                         "is_nullable": "YES",
                         "default": null

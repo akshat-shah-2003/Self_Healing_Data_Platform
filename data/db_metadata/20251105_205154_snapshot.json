@@ -1,0 +1,231 @@
+{
+    "user_id": "AKSHATSHAH",
+    "timestamp": "2025-11-05T20:51:51Z",
+    "database": "SALES_DB",
+    "schemas": {
+        "PUBLIC": {
+            "tables": {
+                "SALES_DATA": [
+                    {
+                        "column_name": "CONTACTLASTNAME",
+                        "data_type": "TEXT",
+                        "is_nullable": "YES",
+                        "default": null
+                    },
+                    {
+                        "column_name": "PHONE",
+                        "data_type": "TEXT",
+                        "is_nullable": "YES",
+                        "default": null
+                    },
+                    {
+                        "column_name": "QUANTITYORDERED",
+                        "data_type": "NUMBER",
+                        "is_nullable": "YES",
+                        "default": null
+                    },
+                    {
+                        "column_name": "MONTH_ID",
+                        "data_type": "NUMBER",
+                        "is_nullable": "YES",
+                        "default": null
+                    },
+                    {
+                        "column_name": "YEAR_ID",
+                        "data_type": "NUMBER",
+                        "is_nullable": "YES",
+                        "default": null
+                    },
+                    {
+                        "column_name": "DEALSIZE",
+                        "data_type": "TEXT",
+                        "is_nullable": "YES",
+                        "default": null
+                    },
+                    {
+                        "column_name": "CUSTOMERNAME",
+                        "data_type": "TEXT",
+                        "is_nullable": "YES",
+                        "default": null
+                    },
+                    {
+                        "column_name": "MSRP",
+                        "data_type": "NUMBER",
+                        "is_nullable": "YES",
+                        "default": null
+                    },
+                    {
+                        "column_name": "ORDERDATE",
+                        "data_type": "TEXT",
+                        "is_nullable": "YES",
+                        "default": null
+                    },
+                    {
+                        "column_name": "ORDERLINENUMBER",
+                        "data_type": "NUMBER",
+                        "is_nullable": "YES",
+                        "default": null
+                    },
+                    {
+                        "column_name": "ADDRESSLINE2",
+                        "data_type": "TEXT",
+                        "is_nullable": "YES",
+                        "default": null
+                    },
+                    {
+                        "column_name": "PRODUCTCODE",
+                        "data_type": "TEXT",
+                        "is_nullable": "YES",
+                        "default": null
+                    },
+                    {
+                        "column_name": "CITY",
+                        "data_type": "TEXT",
+                        "is_nullable": "YES",
+                        "default": null
+                    },
+                    {
+                        "column_name": "ORDERNUMBER",
+                        "data_type": "NUMBER",
+                        "is_nullable": "YES",
+                        "default": null
+                    },
+                    {
+                        "column_name": "POSTALCODE",
+                        "data_type": "TEXT",
+                        "is_nullable": "YES",
+                        "default": null
+                    },
+                    {
+                        "column_name": "STATUS",
+                        "data_type": "TEXT",
+                        "is_nullable": "YES",
+                        "default": null
+                    },
+                    {
+                        "column_name": "ADDRESSLINE1",
+                        "data_type": "TEXT",
+                        "is_nullable": "YES",
+                        "default": null
+                    },
+                    {
+                        "column_name": "COUNTRY",
+                        "data_type": "TEXT",
+                        "is_nullable": "YES",
+                        "default": null
+                    },
+                    {
+                        "column_name": "PRODUCTLINE",
+                        "data_type": "TEXT",
+                        "is_nullable": "YES",
+                        "default": null
+                    },
+                    {
+                        "column_name": "PRICEEACH",
+                        "data_type": "NUMBER",
+                        "is_nullable": "YES",
+                        "default": null
+                    },
+                    {
+                        "column_name": "QTR_ID",
+                        "data_type": "NUMBER",
+                        "is_nullable": "YES",
+                        "default": null
+                    },
+                    {
+                        "column_name": "STATE",
+                        "data_type": "TEXT",
+                        "is_nullable": "YES",
+                        "default": null
+                    },
+                    {
+                        "column_name": "TERRITORY",
+                        "data_type": "TEXT",
+                        "is_nullable": "YES",
+                        "default": null
+                    },
+                    {
+                        "column_name": "SALES",
+                        "data_type": "NUMBER",
+                        "is_nullable": "YES",
+                        "default": null
+                    },
+                    {
+                        "column_name": "CONTACTFIRSTNAME",
+                        "data_type": "TEXT",
+                        "is_nullable": "YES",
+                        "default": null
+                    }
+                ],
+                "RETAIL_SALES": [
+                    {
+                        "column_name": "PAYMENT_METHOD",
+                        "data_type": "TEXT",
+                        "is_nullable": "YES",
+                        "default": null
+                    },
+                    {
+                        "column_name": "TOTAL_SPENT",
+                        "data_type": "NUMBER",
+                        "is_nullable": "YES",
+                        "default": null
+                    },
+                    {
+                        "column_name": "QUANTITY",
+                        "data_type": "NUMBER",
+                        "is_nullable": "YES",
+                        "default": null
+                    },
+                    {
+                        "column_name": "TRANSACTION_ID",
+                        "data_type": "TEXT",
+                        "is_nullable": "YES",
+                        "default": null
+                    },
+                    {
+                        "column_name": "ITEM",
+                        "data_type": "TEXT",
+                        "is_nullable": "YES",
+                        "default": null
+                    },
+                    {
+                        "column_name": "LOCATION",
+                        "data_type": "TEXT",
+                        "is_nullable": "YES",
+                        "default": null
+                    },
+                    {
+                        "column_name": "CUSTOMER_ID",
+                        "data_type": "TEXT",
+                        "is_nullable": "YES",
+                        "default": null
+                    },
+                    {
+                        "column_name": "TRANSACTION_DATE",
+                        "data_type": "DATE",
+                        "is_nullable": "YES",
+                        "default": null
+                    },
+                    {
+                        "column_name": "CATEGORY",
+                        "data_type": "TEXT",
+                        "is_nullable": "YES",
+                        "default": null
+                    },
+                    {
+                        "column_name": "DISCOUNT_APPLIED",
+                        "data_type": "BOOLEAN",
+                        "is_nullable": "YES",
+                        "default": null
+                    },
+                    {
+                        "column_name": "PRICE_PER_UNIT",
+                        "data_type": "NUMBER",
+                        "is_nullable": "YES",
+                        "default": null
+                    }
+                ]
+            }
+        }
+    }
+}
