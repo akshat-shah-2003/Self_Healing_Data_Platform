@@ -4,6 +4,7 @@ import snowflake.connector
 from dotenv import load_dotenv
 from utils.logger import get_logger
 from datetime import datetime
+from difflib import SequenceMatcher
 
 # Initialize logger
 logger = get_logger(__name__)
@@ -12,6 +13,9 @@ logger = get_logger(__name__)
 load_dotenv()
 output_dir = "data/db_metadata"
 os.makedirs(output_dir, exist_ok=True)
+
+def is_probable_rename(old, new):
+    return SequenceMatcher(None, old.lower(), new.lower()).ratio() > 0.5
 
 def load_snapshot():
     """Load the most recent snapshot file (if any)."""
@@ -41,12 +45,35 @@ def to_map(snap):
             for col in columns:
                 kkey = f"{schema_name}.{table_name}.{col['column_name']}"
                 flat_map[kkey] = col
+                # {PUBLIC.SALES_DATA.CONTACTLASTNAME: {"column_name": "CONTACTLASTNAME","data_type": "TEXT","is_nullable": "YES","default": null},...}
     return flat_map
 
 def compare_snapshots(old_snap, new_snap):
+    if not old_snap:
+        logger.info("No previous snapshot found. Skipping comparison.")
+        return
     old_map = to_map(old_snap)
     new_map = to_map(new_snap)
-    pass
+    #check for missing columns
+    #print(new_map)
+    for kkeyo, kkeyn in zip(old_map.values(), new_map.values()):
+        if kkeyo['column_name'] != kkeyn['column_name']:
+            logger.warning(f"Column missing: {kkeyo['column_name']}")
+            logger.warning(f"Checking for probable renames...")
+            if is_probable_rename(kkeyo['column_name'], kkeyn['column_name']) and kkeyo['data_type'] == kkeyn['data_type']:
+                logger.warning(f"Probable rename detected for column: {kkeyo['column_name']} => {kkeyn['column_name']}")
+            else:
+                logger.warning("No probable rename found, might be a deletion.")
+        #     logger.warning(f"Column missing: {kkey}")
+        #     logger.warning(f"Checking for probable renames...")
+        #     old_col, new_col = old_map[kkey], new_map.get(kkey, {})
+        #     print(old_col['column_name'], new_col.get('column_name', ''))
+            # if is_probable_rename(old_col['column_name'], new_col.get('column_name', '')) and old_col['data_type'] == new_col.get('data_type', ''):
+            #     logger.warning(f"Probable rename detected for column: {old_col['column_name']} => {new_col.get('column_name', '')}")
+    return
+
+
+
 
 
 def infer_schema():
@@ -75,12 +102,14 @@ def infer_schema():
         query = f"""
             SELECT 
                 table_name,
-                column_name, 
+                column_name,
                 data_type, 
+                ordinal_position, 
                 is_nullable, 
                 column_default 
             FROM {os.getenv("SNOWFLAKE_DATABASE")}.INFORMATION_SCHEMA.COLUMNS
-            WHERE table_schema = '{os.getenv("SNOWFLAKE_SCHEMA")}';
+            WHERE table_schema = '{os.getenv("SNOWFLAKE_SCHEMA")}'
+            ORDER BY ordinal_position;
         """
         schema = os.getenv("SNOWFLAKE_SCHEMA")
 
@@ -92,33 +121,24 @@ def infer_schema():
                 schema: {"tables": {}}
             },
         }
-
         cur = conn.cursor()
         cur.execute(query)
         logger.info("Fetching metadata...")
 
         schema_dict = metadata["schemas"][schema]["tables"]
 
-        for table_name, column_name, data_type, is_nullable, column_default in cur.fetchall():
+        for table_name, column_name, data_type, ordinal_position, is_nullable, column_default in cur.fetchall():
             schema_dict.setdefault(table_name,[]).append({
                 "column_name": column_name,
                 "data_type": data_type,
+                "ordinal_position": ordinal_position,
                 "is_nullable": is_nullable,
-                "default": column_default,
+                "default": column_default
             })
-
-        # Define file path
-        file_path = f"{output_dir}/{datetime.now().strftime('%Y%m%d_%H%M%S')}_snapshot.json"
-
-        # Save schema to JSON
-        with open(file_path, "w") as f:
-            json.dump(metadata, f, indent=4)
-
-        logger.info(f"Schema inference completed and saved to: {file_path}")
-
-        snapshot = json.load(open(os.path.join(output_dir,ss), "r"))
-
-        print(type(snapshot))
+        
+        #print(metadata)
+        compare_snapshots(ss, metadata)
+        save_snapshot(metadata)
         #ss = file_path
 
     except Exception as e:
