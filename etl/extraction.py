@@ -52,25 +52,30 @@ def compare_snapshots(old_snap, new_snap):
     if not old_snap:
         logger.info("No previous snapshot found. Skipping comparison.")
         return
-    old_map = to_map(old_snap)
-    new_map = to_map(new_snap)
-    #check for missing columns
-    #print(new_map)
-    for kkeyo, kkeyn in zip(old_map.values(), new_map.values()):
-        if kkeyo['column_name'] != kkeyn['column_name']:
-            logger.warning(f"Column missing: {kkeyo['column_name']}")
-            logger.warning(f"Checking for probable renames...")
-            if is_probable_rename(kkeyo['column_name'], kkeyn['column_name']) and kkeyo['data_type'] == kkeyn['data_type']:
-                logger.warning(f"Probable rename detected for column: {kkeyo['column_name']} => {kkeyn['column_name']}")
-            else:
-                logger.warning("No probable rename found, might be a deletion.")
-        #     logger.warning(f"Column missing: {kkey}")
-        #     logger.warning(f"Checking for probable renames...")
-        #     old_col, new_col = old_map[kkey], new_map.get(kkey, {})
-        #     print(old_col['column_name'], new_col.get('column_name', ''))
-            # if is_probable_rename(old_col['column_name'], new_col.get('column_name', '')) and old_col['data_type'] == new_col.get('data_type', ''):
-            #     logger.warning(f"Probable rename detected for column: {old_col['column_name']} => {new_col.get('column_name', '')}")
-    return
+    old_snap_d = to_map(old_snap)
+    new_snap_d = to_map(new_snap)
+    old_cols = old_snap_d.keys()
+    new_cols = new_snap_d.keys()
+
+    added = new_cols - old_cols
+    removed = old_cols - new_cols
+    common = old_cols & new_cols
+
+    if len(common) == len(old_cols) and len(added) == 0 and len(removed) == 0:
+        logger.info("No changes detected in the schema.")
+        return
+    
+    logger.warning("Schema changes detected:")
+    logger.warning(f"New columns detected: {added}")
+    logger.warning(f"Deleted columns detected: {removed}")
+    # print("************************************")
+    # print(old_snap)
+    # print("************************************")
+
+    for rem in removed:
+        for add in added:
+            if is_probable_rename(old_snap_d[rem]["column_name"], new_snap_d[add]["column_name"]) and old_snap_d[rem]["data_type"] == new_snap_d[add]["data_type"]:
+                logger.warning(f"Column rename detected: {rem} => {add}")
 
 
 
